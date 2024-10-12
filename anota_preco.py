@@ -1,5 +1,5 @@
 from openpyxl import load_workbook
-from captura_preco import captura_preco, preco_produto
+from captura_preco import captura_preco, armazena_link
 from datetime import date
 from winotify import Notification, audio
 
@@ -28,7 +28,7 @@ def escrevendo_preco():
 
         # Verifica se a célula atual está vazia, e anota o preço e data na próxima linha
         if celula_a.value is None:
-            celula_a.value = captura_preco(preco_produto)
+            celula_a.value = captura_preco()
         if celula_b.value is None:
             celula_b.value = dataFormatada
 
@@ -42,14 +42,14 @@ def escrevendo_preco():
                                  icon=r"C:\Users\GuiMo\Downloads\pascall.gif")
         notify_up.set_audio(audio.Reminder, loop=False)
         notify_up.add_actions(label="Link para o produto",
-                              launch="https://www.kabum.com.br/produto/471916/monitor-gamer-curvo-kbm-gaming-mg210-23-6-180hz-full-hd-1ms-displayport-e-hdmi-adaptive-sync-ajuste-de-angulo-kgmg21023pt")
+                              launch=armazena_link())
 
         notify_down = Notification(app_id="Monitorador de Preço", title="O PREÇO DO PRODUTO CAIU",
                                    msg=f'O preço atual é: {celula_a.value} reais.',
                                    icon=r"C:\Users\GuiMo\Downloads\cerrisete.gif")
         notify_down.set_audio(audio.Reminder, loop=False)
         notify_down.add_actions(label="Link para o produto",
-                                launch="https://www.kabum.com.br/produto/471916/monitor-gamer-curvo-kbm-gaming-mg210-23-6-180hz-full-hd-1ms-displayport-e-hdmi-adaptive-sync-ajuste-de-angulo-kgmg21023pt")
+                                launch=armazena_link())
 
 
 
@@ -74,7 +74,7 @@ def escrevendo_preco():
                                          icon=r"C:\Users\GuiMo\Downloads\moneyrich.gif")
             notify_record.set_audio(audio.Reminder, loop=False)
             notify_record.add_actions(label="Link para o produto",
-                                      launch="https://www.kabum.com.br/produto/471916/monitor-gamer-curvo-kbm-gaming-mg210-23-6-180hz-full-hd-1ms-displayport-e-hdmi-adaptive-sync-ajuste-de-angulo-kgmg21023pt")
+                                      launch=armazena_link())
             notify_record.show()
 
 
