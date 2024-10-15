@@ -1,4 +1,8 @@
+import os.path
+
 from openpyxl import load_workbook
+from openpyxl.workbook import Workbook
+
 from captura_preco import captura_preco, armazena_link
 from datetime import date
 from winotify import Notification, audio
@@ -10,10 +14,17 @@ dataFormatada = data.strftime('%d/%m/%Y')
 
 def escrevendo_preco():
     """Função que anota o preço na planilha definida"""
+    local_planilha= r'C:\Users\GuiMo\Downloads\monitoramento'
+    arq_planilha = os.path.join(local_planilha,'price_monitor.xlsx')
     try:
-        # Carrega a planilha Excel
-        workbook = load_workbook(r'C:\Users\GuiMo\Downloads\price_monitor.xlsx')
-        sheet = workbook.active
+        if not os.path.exists(arq_planilha):
+            workbook = Workbook()
+            sheet = workbook.active
+            workbook.save(arq_planilha)
+        else:
+            workbook = load_workbook(arq_planilha)
+            sheet = workbook.active
+
 
         # Captura a última linha preenchida com texto na planilha
         ultima_linha = sheet.max_row
@@ -33,7 +44,7 @@ def escrevendo_preco():
             celula_b.value = dataFormatada
 
         # Salva as alterações na planilha
-        workbook.save(r'C:\Users\GuiMo\Downloads\price_monitor.xlsx')
+        workbook.save(arq_planilha)
 
         # Configura notificações
         notify_up = Notification(app_id="Monitorador de Preço", title="O PREÇO DO PRODUTO SUBIU",
@@ -61,7 +72,7 @@ def escrevendo_preco():
             elif celula_a.value < ultimo_valor_a.value:
                 notify_down.show()
         else:
-            print("Valores inválidos encontrados na planilha.")
+            print("A ultima célula verificada está em branco, ou vazia.")
 
 
         preco_historico = sheet['A2']
