@@ -3,13 +3,14 @@ from bs4 import BeautifulSoup
 import os
 
 
-#variável que pega o URL que estou monitorando:
-
+#variável que pega o URL que deseja monitorar:
 
 def armazena_link():
+
     caminho = r'C:\Users\GuiMo\Downloads\monitoramento'
     arquivo = caminho + r'\link_monitoramento.txt'
 
+    #Verifica se arquivo da planilha já existe, se ele não existir, o cria na pasta que também é verificada e criada se não existir.
     if os.path.exists(arquivo):
         with open(arquivo, "r") as file:
             link = file.read().strip()
@@ -31,7 +32,9 @@ html = response.text
 
 soup = BeautifulSoup(html, 'html.parser')
 
-#Loop que recolhe o valor do produto, sem o desconto do pix
+
+#Loop que recolhe o valor do produto, sem os descontos.
+
 def captura_preco():
 
     #Variável que localiza onde fica o valor do produto
@@ -41,7 +44,6 @@ def captura_preco():
             price = price.text
             new_price = price.replace("R$", "").replace(",", ".")
             return float(new_price)
-
 
     if "mercadolivre.com.br" in armazena_link():
         preco_produto = soup.find_all('span', {'class': 'andes-money-amount__fraction'})

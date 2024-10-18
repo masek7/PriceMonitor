@@ -1,8 +1,6 @@
 import os.path
-
 from openpyxl import load_workbook
 from openpyxl.workbook import Workbook
-
 from captura_preco import captura_preco, armazena_link
 from datetime import date
 from winotify import Notification, audio
@@ -10,7 +8,6 @@ from winotify import Notification, audio
 # Guardando a data do dia em que o script é executado e formatando para o formato brasileiro
 data = date.today()
 dataFormatada = data.strftime('%d/%m/%Y')
-
 
 def escrevendo_preco():
     """Função que anota o preço na planilha definida"""
@@ -24,7 +21,6 @@ def escrevendo_preco():
         else:
             workbook = load_workbook(arq_planilha)
             sheet = workbook.active
-
 
         # Captura a última linha preenchida com texto na planilha
         ultima_linha = sheet.max_row
@@ -63,8 +59,6 @@ def escrevendo_preco():
                                 launch=armazena_link())
 
 
-
-
         # Compara o valor atual com o anterior e envia a notificação correta
         if celula_a.value and ultimo_valor_a.value:  # Verifica se os valores não são None
             if celula_a.value > ultimo_valor_a.value:
@@ -79,6 +73,7 @@ def escrevendo_preco():
         new_preco_historico = float(preco_historico.value)
 
         if new_preco_historico > celula_a.value:
+            #Verificação e criação de um preço histórico para monitoramento do menor preço já atingido dentro da planilha
             preco_historico = celula_a.value
             notify_record = Notification(app_id="Monitorador de Preço", title="MENOR PREÇO HISTÓRICO",
                                          msg=f'O PREÇO ATUAL É: {celula_a.value} REAIS!!',
