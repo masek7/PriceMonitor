@@ -43,6 +43,7 @@ def captura_preco():
         for price in preco_produto:
             price = price.text
             new_price = price.replace("R$", "").replace(",", ".")
+
             return float(new_price)
 
     if "mercadolivre.com.br" in armazena_link():
@@ -50,6 +51,7 @@ def captura_preco():
         for price in preco_produto[1]:
             price = price.text
             return float(price)
+
 
 captura_preco()
 
