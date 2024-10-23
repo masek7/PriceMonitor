@@ -46,14 +46,14 @@ def escrevendo_preco():
         notify_up = Notification(app_id="Monitorador de Preço", title="O PREÇO DO PRODUTO SUBIU",
                                  msg=f'O preço atual é: {celula_a.value} reais.',
                                  duration="short",
-                                 icon=r"C:\Users\GuiMo\Downloads\pascall.gif")
+                                 icon="icons_noti/high_price.jpg")
         notify_up.set_audio(audio.Reminder, loop=False)
         notify_up.add_actions(label="Link para o produto",
                               launch=armazena_link())
 
         notify_down = Notification(app_id="Monitorador de Preço", title="O PREÇO DO PRODUTO CAIU",
                                    msg=f'O preço atual é: {celula_a.value} reais.',
-                                   icon=r"C:\Users\GuiMo\Downloads\cerrisete.gif")
+                                   icon="icons_noti/low_price.jpg")
         notify_down.set_audio(audio.Reminder, loop=False)
         notify_down.add_actions(label="Link para o produto",
                                 launch=armazena_link())
@@ -77,7 +77,8 @@ def escrevendo_preco():
             preco_historico = celula_a.value
             notify_record = Notification(app_id="Monitorador de Preço", title="MENOR PREÇO HISTÓRICO",
                                          msg=f'O PREÇO ATUAL É: {celula_a.value} REAIS!!',
-                                         icon=r"C:\Users\GuiMo\Downloads\moneyrich.gif")
+                                         icon="icons_noti/record_lowPrice.gif")
+
             notify_record.set_audio(audio.Reminder, loop=False)
             notify_record.add_actions(label="Link para o produto",
                                       launch=armazena_link())
